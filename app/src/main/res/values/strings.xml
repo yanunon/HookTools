@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HookTools</string>
+
+    <!-- Strings related to Settings -->
+    <string name="settings_mm_webview_debuggable">WeChat WebView Debuggable</string>
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+
+</resources>
