@@ -26,7 +26,7 @@ public class UCInfoFlowHooker implements IXposedHookLoadPackage
 			return;
 		}
 
-		XposedBridge.log("Loaded app: " + loadPackageParam.packageName);
+//		XposedBridge.log("Loaded app: " + loadPackageParam.packageName);
 
 		if (!TextUtils.equals(loadPackageParam.packageName, Utils.UC_PACKAGE_NAME))
 		{

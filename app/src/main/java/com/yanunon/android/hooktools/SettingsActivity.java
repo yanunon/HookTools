@@ -27,7 +27,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        if(intent != null)
+        {
+            intent.putExtra(EXTRA_NO_HEADERS, true);
+            intent.putExtra(EXTRA_SHOW_FRAGMENT, GeneralPreferenceFragment.class.getName());
+        }
         super.onCreate(savedInstanceState);
+
         setupActionBar();
     }
 
@@ -38,7 +45,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
         }
     }
 
@@ -69,8 +76,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
             addPreferencesFromResource(R.xml.pref_general);
-            setHasOptionsMenu(true);
+            setHasOptionsMenu(false);
         }
 
         @Override

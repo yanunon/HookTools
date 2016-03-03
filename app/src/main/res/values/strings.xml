@@ -2,7 +2,9 @@
     <string name="app_name">HookTools</string>
 
     <!-- Strings related to Settings -->
-    <string name="settings_mm_webview_debuggable">WeChat WebView Debuggable</string>
+    <string name="settings_mm_webview_debuggable">微信WebView调试</string>
+    <string name="settings_summary_mm_webview_debuggable">强制微信使用系统WebView，并打开调试开关</string>
+
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 

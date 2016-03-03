@@ -24,31 +24,25 @@ public class MMWebViewHooker implements IXposedHookLoadPackage
 	@Override
 	public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable
 	{
-
 		if (loadPackageParam == null)
 		{
 			return;
 		}
-
-		XposedBridge.log("MMWebViewHooker Loaded app: " + loadPackageParam.packageName + " classLoader:" + loadPackageParam.classLoader.toString());
 
 		if (!TextUtils.equals(loadPackageParam.packageName, Utils.MM_PACKAGE_NAME))
 		{
 			return;
 		}
 
-
-		//		if (Utils.getDefaultSharedPreferences().getBoolean("settings_mm_webview_debuggable", false))
-		{
-			setMMWebViewDebuggingEnable(loadPackageParam);
-		}
-
+        boolean debugEnable = Utils.getDefaultSharedPreferences().getBoolean("settings_mm_webview_debuggable", false);
+        setMMWebViewDebuggingEnable(loadPackageParam, debugEnable);
 	}
 
 	@TargetApi(19)
-	private void setMMWebViewDebuggingEnable(XC_LoadPackage.LoadPackageParam loadPackageParam)
+	private void setMMWebViewDebuggingEnable(XC_LoadPackage.LoadPackageParam loadPackageParam, final boolean enable)
 	{
-		XposedBridge.log("setWebContentsDebuggingEnabled start...");
+		XposedBridge.log("setWebContentsDebuggingEnabled start... enable:" + enable);
+
 		final Class QbSdkclass = XposedHelpers.findClass("com.tencent.smtt.sdk.QbSdk", loadPackageParam.classLoader);
 		XposedHelpers.findAndHookConstructor("com.tencent.smtt.sdk.WebView", loadPackageParam.classLoader, Context.class, AttributeSet.class,
 				int.class, Map.class, boolean.class, new XC_MethodHook()
@@ -61,7 +55,7 @@ public class MMWebViewHooker implements IXposedHookLoadPackage
 						{
 							if (QbSdkclass != null)
 							{
-								XposedHelpers.callStaticMethod(QbSdkclass, "forceSysWebView", new Object[]{});
+								XposedHelpers.callStaticMethod(QbSdkclass, enable ? "forceSysWebView" : "unForceSysWebView", new Object[]{});
 							}
 							else
 							{
@@ -80,7 +74,7 @@ public class MMWebViewHooker implements IXposedHookLoadPackage
 						super.afterHookedMethod(param);
 						if (BuildConfig.VERSION_CODE >= 19)
 						{
-							WebView.setWebContentsDebuggingEnabled(true);
+							WebView.setWebContentsDebuggingEnabled(enable);
 							XposedBridge.log("setWebContentsDebuggingEnabled success...");
 						}
 					}
