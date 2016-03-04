@@ -1,8 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:defaultValue="true"
         android:key="settings_mm_webview_debuggable"
+        android:defaultValue="false"
         android:summary="@string/settings_summary_mm_webview_debuggable"
         android:title="@string/settings_mm_webview_debuggable"/>
 
